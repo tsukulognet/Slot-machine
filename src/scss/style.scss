@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css?family=Shrikhand');
+@import url('https://fonts.googleapis.com/css?family=Concert+One');
+@mixin glassCircle($colorLight,$colorDark,$h,$w) {
+	background: radial-gradient(50% 80%, circle, $colorLight, $colorDark);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5),
+		0 2px 10px rgba($colorLight, 0.7),
+		inset 0 0 10px rgba(0, 0, 150, 0.6);
+	border: 1px solid rgba(0, 0, 0, .5);
+	border-radius: 100%;
+	position: relative;
+	display: block;
+	height: $h;
+	width: $w;
+	&::before {
+		background-image: linear-gradient(
+			top,
+			rgba(250, 250, 255, 1) 0%,
+			rgba(250, 250, 255, 0.7) 10%,
+			rgba(250, 250, 255, 0) 100%
+		);
+		border-radius: 6em;
+		content: '';
+		display: block;
+		height: 100%;
+		position: absolute;
+		top: -0.5em;
+		left: 0;
+		transform: scale(0.8, 0.6);
+		width: 100%;
+		z-index: 3;
+	}
+}
+@mixin gradient($start-color, $end-color, $orientation) {
+	background: $start-color;
+	@if $orientation == vertical {
+		// vertical
+		background: linear-gradient(to bottom, $start-color 0%, $end-color 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(
+				startColorstr='$start-color',
+				endColorstr='$end-color',
+				GradientType=0
+			);
+	}
+	@else if $orientation == horizontal {
+		// horizontal
+		background: linear-gradient(to right, $start-color 0%, $end-color 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(
+				startColorstr='$start-color',
+				endColorstr='$end-color',
+				GradientType=1
+			);
+	}
+	@else {
+		// radial
+		background: radial-gradient(
+			ellipse at center,
+			$start-color 0%,
+			$end-color 100%
+		);
+		filter: progid:DXImageTransform.Microsoft.gradient(
+				startColorstr='$start-color',
+				endColorstr='$end-color',
+				GradientType=1
+			);
+	}
+}
+html {
+	box-sizing: border-box;
+	font-size: 14px;
+	//font-size: 4vw;
+	@media screen and (min-width: 600px) {
+		font-size: 14px;
+	}
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+html, body {
+	height: 100%;
+}
+body {
+	background: #ccc; //#ccc
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	//justify-content: space-between;
+	justify-content: center;
+	line-height: 1.8;
+	overflow: hidden;
+}
+a {
+	pointer-events: none;
+}
+.result-zoom {
+	animation: zoom 1s 1;
+}
+.fadeout {
+	opacity: 0;
+	visibility: hidden;
+}
+.result-message {
+	font-size: 10em;
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	z-index: 100;
+}
+@keyframes zoom {
+	0% {
+		transform: scale(0.2);
+		opacity: 1;
+		visibility: visible;
+	}
+	70% {
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+.slot {
+	//background:#e24a4a;//#fcbc55
+	background-image: linear-gradient(#fcbdbd 0%, #e24a4a 100%);
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+	border-radius: 4em/20em;
+	display: flex;
+	//flex-direction: column;
+	min-height: 24em;
+	margin-bottom: 1em;
+	padding: 2.6em 2.8em;
+}
+.display {
+	///border: inset 1em red;
+	//border-radius: 2em;
+	border-radius: 2em/20em;
+	display: flex;
+	//flex-wrap: wrap;
+	justify-content: space-around;
+	//flex:3;
+	height: 12em;
+	overflow: hidden;
+	margin-bottom: 1em;
+	position: relative;
+	width: 20em;
+	&::before {
+		background: linear-gradient(
+			180deg,
+			#333 0%,
+			transparent 30%,
+			transparent 70%,
+			#333 100%
+		);
+		content: '';
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+}
+.items {
+	background: #fff;
+	border-radius: 0.2em/10em;
+	//background: #fff;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	//flex: 1;
+	//padding:0 2em;
+	width: 6em;
+}
+.item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	font-size: 1.5em;
+}
+.lever {
+	background-image: linear-gradient(#ededed 0%, #adadad 100%);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
+	border-radius: 0.5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 12em;
+	margin-left: 1em;
+	padding: 0em 0.6em;
+	//width:5em;
+	&-axis {
+		background: linear-gradient(
+			180deg,
+			#333 0%,
+			transparent 30%,
+			transparent 70%,
+			#333 100%
+		);
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		height: 10em; //-8
+		position: relative;
+		width: 100%;
+	}
+	&-stick {
+		background: linear-gradient(
+			90deg,
+			#333 0%,
+			transparent 30%,
+			transparent 70%,
+			#333 100%
+		);
+		border-radius: 2em;
+		height: 5em;
+		transform-origin: center bottom;
+		//transform:rotateX(180deg);
+		width: 1.5em;
+	}
+	&-ball {
+		@include glassCircle(#bcffd1,#26ef66,3em,3em);
+		margin-left: -1.5em;
+		position: absolute;
+		top: -1.5em;
+		left: 50%;
+		transform-origin: center center;
+	}
+}
+.btns {
+	//background: #fcbc55;
+	background-image: linear-gradient(#ffe3b7 0%, #fcbc55 100%);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.28);
+	border-radius: 0.5em;
+	display: flex;
+	//flex: 1;
+	//flex-wrap:wrap;
+}
+button {
+	background: none;
+	border: none;
+}
+//http://webrocketsmagazine.com/entry/20120131/css3-aqua-button-tutorial.html
+.btn-wrap {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1em;
+}
+
+.btn-glass {
+	@include glassCircle(#fc6a6a, #fc1b1b,2.6em,2.6em);
+}
+.btn-square {
+	background-image: linear-gradient(#6795fd 0%, #67ceff 100%);
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+	border-bottom: solid 3px #5e7fca;
+	border-radius: 4px;
+	color: rgba(0, 69, 212, 0.47);
+	display: inline-block;
+	font-weight: bold;
+	padding: 1em 1.5em;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+	&:active {
+		box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+		border-bottom: none;
+		transform: translateY(4px);
+	}
+}
+.hide {
+	display: none;
+}
+
+.start-btn {
+	font-family: 'Concert One', cursive;
+}
+.seven {
+	//球は緑で
+	font-family: 'Shrikhand', cursive;
+	//font-style:italic;
+	font-weight: bold;
+}
+.color-pink {
+	color: #f9205a;
+}
+.color-gold {
+	color: #f9c220;
+}
+.color-orange {
+	color: #f45d33;
+}
+.color-green {
+	color: #317036;
+}
+.color-blue {
+	color: #3e6be8;
+}
