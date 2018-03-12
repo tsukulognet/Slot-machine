@@ -1,0 +1,55 @@
+doctype html
+html(lang="ja")
+	head
+		meta(charset="utf-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+		title Slot machine
+		link(href="dist/css/style.css" rel="stylesheet" type="text/css")
+		link(href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css")
+	body
+		.result-message
+		.slot
+			.display-wrap
+				.display
+					- const directions = ['left', 'center', 'right']
+					-
+						const icons = [
+							{
+								iconName: 'heart',
+								iconColor: 'pink'
+							},
+							{
+								iconName: 'bell',
+								iconColor: 'gold'
+							},
+							{
+								iconName: 'seven',
+								iconColor: 'orange'
+							},
+							{
+								iconName: 'tree',
+								iconColor: 'green'
+							},
+							{
+								iconName: 'car',
+								iconColor: 'blue'
+							}
+						]
+					each direction in directions
+						.items(class=`items-${direction}`)
+							each icon in icons
+								.item(class=`item-${direction}`)
+									if icon['iconName'] == 'seven'
+										i(class=`${icon['iconName']} color-${icon['iconColor']}`)
+									else	
+										i(class=`fa fa-${icon['iconName']} color-${icon['iconColor']}` aria-hidden=`true`)
+				.btns
+					each direction in directions					
+						button.btn-wrap(class=`btn-${direction}`)
+							a(class=`btn-glass` href=`#`)
+			.lever
+				.lever-axis
+					.lever-stick
+					.lever-ball
+		button.replay-btn.btn-square Replay!	
+		script(src="dist/js/app.js")
